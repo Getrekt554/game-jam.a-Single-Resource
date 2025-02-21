@@ -2,7 +2,7 @@ import pygame
 from button import *
 
 class window():
-    def __init__(self, screen, pos, width, height):
+    def __init__(self, screen, pos, width, height, index):
         self.surface = pygame.Surface((width, height))
         self.screen = screen
         self.pos = pos
@@ -14,10 +14,11 @@ class window():
         self.dragged = False
         self.clicked_dif = pygame.Vector2(0, 0)
         self.run = True
+        self.index = index
 
 
     
-    def draw(self):
+    def draw(self, windows):
         if self.run:
             self.surface.fill((250,250,250))
             self.exit.pos = (self.pos[0] + self.width - 31, self.pos[1])
@@ -38,4 +39,12 @@ class window():
             self.dragged = False
         
         if self.dragged == True:
-            self.pos = pygame.Vector2(pygame.mouse.get_pos()) + -self.clicked_dif
+            self.push_to_top(windows)
+            self.pos = pygame.Vector2(pygame.mouse.get_pos()) - self.clicked_dif
+    
+    def push_to_top(self, windows):
+        windows.remove(self)
+        windows.insert(0, self)
+        self.index = 0
+        for window in windows:
+            window.index += 1
