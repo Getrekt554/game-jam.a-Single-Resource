@@ -18,18 +18,36 @@ while run:
         if event.type == pygame.QUIT:
             run = False
         elif event.type == pygame.MOUSEBUTTONDOWN and mouse_state[0]:
+        
+            if newWindow.clickable():
+                 newWindow.dragged = True
+
             if exitButton.clickable() and exitButton.mode == 'down':
                 run = False
-        elif event.type == pygame.MOUSEBUTTONUP and mouse_state[0] and exitButton.mode == 'up' and exitButton.clickable():
-            run = False
+            
+        elif event.type == pygame.MOUSEBUTTONUP:
+            newWindow.dragged = False
+
+            if mouse_state[0] and exitButton.mode == 'up' and exitButton.clickable():
+                run = False
+            elif mouse_state[0] and exitButton.mode == 'up' and newWindow != 0 and newWindow.exit.clickable():
+                newWindow = 0
+
+    print(newWindow.dragged)
+
     
+
+    if newWindow.dragged:
+         newWindow.pos = pygame.mouse.get_pos()
+
     screen.fill((0,0,0))
     pygame.display.set_caption(str(clock.get_fps()))
     clock.tick(60)
 
     pygame.draw.rect(screen, (200,200,200), pygame.Rect(0, 0, screen.get_width(), 45))
 
-    newWindow.draw()
+    if newWindow != 0:
+        newWindow.draw()
 
     exitButton.draw()
 
