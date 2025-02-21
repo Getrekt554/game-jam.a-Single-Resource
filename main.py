@@ -13,8 +13,14 @@ exitButton = Button(screen, (screen.get_width() - 50, 0), 50, 45, (255,255,255))
 newWindow = window(screen, (300, 300), 500, 350)
 
 while run:
+    mouse_state = pygame.mouse.get_pressed()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            run = False
+        elif event.type == pygame.MOUSEBUTTONDOWN and mouse_state[0]:
+            if exitButton.clickable() and exitButton.mode == 'down':
+                run = False
+        elif event.type == pygame.MOUSEBUTTONUP and mouse_state[0] and exitButton.mode == 'up' and exitButton.clickable():
             run = False
     
     screen.fill((0,0,0))
@@ -26,8 +32,6 @@ while run:
     newWindow.draw()
 
     exitButton.draw()
-    if exitButton.clickable() and pygame.mouse.get_just_released()[0]:
-        run = False
 
     pygame.display.flip()
     
