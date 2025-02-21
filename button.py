@@ -10,7 +10,6 @@ class Button():
         self.mode = 'up'
 
     def draw(self):
-        mouse_state = pygame.mouse.get_pressed()
         pygame.draw.rect(self.surface, self.color, pygame.Rect(self.pos[0], self.pos[1], self.width, self.height))
 
     def clickable(self):

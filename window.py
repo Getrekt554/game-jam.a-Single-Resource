@@ -16,6 +16,7 @@ class window():
     def draw(self):
         self.surface.fill((250,250,250))
         self.screen.blit(self.surface, self.pos)
+        self.exit.pos = (self.pos[0] + self.width - 31, self.pos[1])
         self.exit.draw()
         self.screen.blit(self.window_topper, self.pos)
     
