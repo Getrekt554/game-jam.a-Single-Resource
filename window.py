@@ -1,8 +1,10 @@
 import pygame
 from button import *
+from game import *
 
 class Window:
     def __init__(self, screen, pos, width, height, index, app):
+        
         self.screen = screen
         self.pos = pygame.Vector2(pos)  # Use Vector2 for direct manipulation
         self.width = width
@@ -11,13 +13,14 @@ class Window:
         self.exit = Button(self.screen, (self.pos.x + self.width - 31, self.pos.y), 31, 31, "red", "red")
         
         self.window_topper = pygame.image.load("resources/window_topper.png")
-        self.window_topper = pygame.transform.scale(self.window_topper, (int(self.window_topper.get_width() * (self.width / self.window_topper.get_width())), int(self.window_topper.get_height() * ((self.height / 12) / self.window_topper.get_height()))))
+        self.window_topper = pygame.transform.scale(self.window_topper, (int(self.window_topper.get_width() * (self.width / self.window_topper.get_width())), int(self.window_topper.get_height() * ((self.height / 16) / self.window_topper.get_height()))))
         self.dragged = False
         self.clicked_dif = pygame.Vector2(0, 0)
         self.run = True
         self.index = index
         self.just_moved_to_top = False  # Prevent unnecessary reordering
         self.app = app
+        self.game = game(self.surface)
 
     def render(self):
         if not self.run:
@@ -26,6 +29,9 @@ class Window:
         self.surface.fill((250, 250, 250))
         self.exit.pos = (self.pos.x + self.width - 31, self.pos.y)
         self.exit.draw()
+        if self.index == 0:
+            self.game.update()
+        self.game.draw()
         self.screen.blit(self.surface, self.pos)
         self.screen.blit(self.window_topper, self.pos)
 

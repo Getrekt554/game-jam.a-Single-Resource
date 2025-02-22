@@ -13,7 +13,7 @@ exitButton = Button(screen, (screen.get_width() - 50, 0), 50, 45, (255,0,0), (19
 windows = []
 
 for i in range(2):
-    windows.append(Window(screen, (300, 300 + (100 * i)), 350, 350, i, "default"))
+    windows.append(Window(screen, (300, 300 + (100 * i)), 500, 350, i, "default"))
 
 while run:
     for window in windows:
