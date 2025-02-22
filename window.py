@@ -26,6 +26,7 @@ class Window:
         self.surface.fill((250, 250, 250))
         self.exit.pos = (self.pos.x + self.width - 31, self.pos.y)
         self.exit.draw()
+        self.screen.blit(self.surface, self.pos)
         self.screen.blit(self.window_topper, self.pos)
 
         # Window exit button check
@@ -58,6 +59,12 @@ class Window:
             self.pos = pygame.Vector2(mouse_pos) - self.clicked_dif
 
     def push_to_top(self, windows):
-        if windows[0] != self: 
+        if self in windows:
             windows.remove(self)
-            windows.insert(0, self)
+        windows.insert(0, self)
+
+        # Update indices
+        for i, window in enumerate(windows):
+            window.index = i  
+
+
