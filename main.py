@@ -3,17 +3,17 @@ from button import *
 from window import *
 
 pygame.init()
-screen = pygame.display.set_mode((1024,768), pygame.FULLSCREEN)
+screen = pygame.display.set_mode((1024,768))
 clock = pygame.time.Clock()
 run = True   
 
 
-exitButton = Button(screen, (screen.get_width() - 50, 0), 50, 45, (255,0,0))
+exitButton = Button(screen, (screen.get_width() - 50, 0), 50, 45, (255,0,0), (190,0,0))
 
 windows = []
 
 for i in range(2):
-    windows.append(Window(screen, (300, 300 + (100 * i)), 500, 350, i))
+    windows.append(Window(screen, (300, 300 + (100 * i)), 350, 350, i, "default"))
 
 while run:
     for window in windows:
@@ -29,9 +29,8 @@ while run:
     pygame.display.set_caption(str(clock.get_fps()))
 
     for newWindow in reversed(windows):
-        newWindow.draw()
+        newWindow.render()
 
-            
 
     #top bar and exit button
     pygame.draw.rect(screen, (200,200,200), pygame.Rect(0, 0, screen.get_width(), 45))
